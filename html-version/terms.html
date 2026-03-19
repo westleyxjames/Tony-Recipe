@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - NextEra Fashion</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header"></header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Terms & Conditions</span>
+            </div>
+
+            <h1 class="section-title">Terms & Conditions</h1>
+
+            <div style="max-width: 800px; margin: 2rem auto; line-height: 1.8; color: var(--color-gray);">
+                <p style="margin-bottom: 1.5rem;"><em>Last updated: March 6, 2026</em></p>
+
+                <h2 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--color-text);">Agreement to Terms</h2>
+                <p style="margin-bottom: 1.5rem;">
+                    By accessing and using the NextEra Fashion website, you accept and agree to be bound by the terms and provisions of this agreement.
+                </p>
+
+                <h2 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--color-text);">Use License</h2>
+                <p style="margin-bottom: 1rem;">Permission is granted to temporarily download one copy of the materials on NextEra Fashion's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+                <ul style="padding-left: 1.5rem; margin-bottom: 1.5rem;">
+                    <li style="margin-bottom: 0.5rem;">Modify or copy the materials</li>
+                    <li style="margin-bottom: 0.5rem;">Use the materials for any commercial purpose</li>
+                    <li style="margin-bottom: 0.5rem;">Attempt to decompile or reverse engineer any software</li>
+                    <li style="margin-bottom: 0.5rem;">Remove any copyright or proprietary notations</li>
+                </ul>
+
+                <h2 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--color-text);">Product Information</h2>
+                <p style="margin-bottom: 1.5rem;">
+                    We strive to ensure that product descriptions and pricing are accurate. However, we do not warrant that product descriptions, pricing, or other content is accurate, complete, reliable, current, or error-free.
+                </p>
+
+                <h2 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--color-text);">Pricing and Payment</h2>
+                <p style="margin-bottom: 1.5rem;">
+                    All prices are in USD and are subject to change without notice. We reserve the right to refuse or cancel any order for any reason.
+                </p>
+
+                <h2 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--color-text);">Shipping and Delivery</h2>
+                <p style="margin-bottom: 1.5rem;">
+                    Shipping times are estimates and are not guaranteed. We are not responsible for delays caused by customs, weather, or other factors beyond our control.
+                </p>
+
+                <h2 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--color-text);">Returns and Refunds</h2>
+                <p style="margin-bottom: 1.5rem;">
+                    Please refer to our <a href="return-policy.html" style="color: var(--color-text); text-decoration: underline;">Return Policy</a> for detailed information about returns and refunds.
+                </p>
+
+                <h2 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--color-text);">Limitation of Liability</h2>
+                <p style="margin-bottom: 1.5rem;">
+                    In no event shall NextEra Fashion be liable for any damages arising out of the use or inability to use our website or products.
+                </p>
+
+                <h2 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--color-text);">Governing Law</h2>
+                <p style="margin-bottom: 1.5rem;">
+                    These terms shall be governed by and construed in accordance with the laws of the State of New York, without regard to its conflict of law provisions.
+                </p>
+
+                <h2 style="font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--color-text);">Contact Information</h2>
+                <p style="margin-bottom: 1.5rem;">
+                    Questions about the Terms of Service should be sent to us at:
+                    <br><br>
+                    Email: <a href="mailto:legal@nexterafashion.com" style="color: var(--color-text); text-decoration: underline;">legal@nexterafashion.com</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer"></footer>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="drawer">
+        <div class="drawer-overlay"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Shopping Cart</h3>
+                <button class="drawer-close">&times;</button>
+            </div>
+            <div class="drawer-body" id="cart-items"></div>
+            <div class="drawer-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cart-total-amount">$0.00</span>
+                </div>
+                <a href="checkout.html" class="btn btn-primary btn-block">Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Drawer -->
+    <div id="wishlist-drawer" class="drawer">
+        <div class="drawer-overlay"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Wishlist</h3>
+                <button class="drawer-close">&times;</button>
+            </div>
+            <div class="drawer-body" id="wishlist-items"></div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Search Products</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for products...">
+                <div id="search-results" class="search-results"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/components.js"></script>
+</body>
+</html>

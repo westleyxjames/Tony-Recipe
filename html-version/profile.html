@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - NextEra Fashion</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .profile-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .profile-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .order-item {
+            border: 1px solid var(--color-border);
+            border-radius: 0.375rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .order-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            background: #10b981;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header"></header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>My Profile</span>
+            </div>
+
+            <h1 class="section-title">My Profile</h1>
+
+            <div class="profile-grid">
+                <!-- Profile Information -->
+                <div class="profile-section">
+                    <h2>Personal Information</h2>
+                    <div style="color: var(--color-gray);">
+                        <p style="margin-bottom: 1rem;">
+                            <strong style="color: var(--color-text);">Name:</strong> John Doe
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            <strong style="color: var(--color-text);">Email:</strong> john.doe@example.com
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            <strong style="color: var(--color-text);">Phone:</strong> +1 (234) 567-890
+                        </p>
+                        <p style="margin-bottom: 1rem;">
+                            <strong style="color: var(--color-text);">Address:</strong> 123 Main Street, New York, NY 10001
+                        </p>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 1rem;">Edit Profile</button>
+                </div>
+
+                <!-- Order History -->
+                <div class="profile-section">
+                    <h2>Order History</h2>
+                    <div class="order-item">
+                        <div class="order-header">
+                            <div>
+                                <div style="font-weight: 600;">Order #1001</div>
+                                <div style="font-size: 0.875rem; color: var(--color-gray);">March 1, 2026</div>
+                            </div>
+                            <span class="order-status">Delivered</span>
+                        </div>
+                        <div style="font-size: 0.875rem; color: var(--color-gray);">
+                            3 items • Total: $189.97
+                        </div>
+                    </div>
+
+                    <div class="order-item">
+                        <div class="order-header">
+                            <div>
+                                <div style="font-weight: 600;">Order #1002</div>
+                                <div style="font-size: 0.875rem; color: var(--color-gray);">February 15, 2026</div>
+                            </div>
+                            <span class="order-status" style="background: #3b82f6;">In Transit</span>
+                        </div>
+                        <div style="font-size: 0.875rem; color: var(--color-gray);">
+                            2 items • Total: $129.98
+                        </div>
+                    </div>
+
+                    <p style="text-align: center; color: var(--color-gray); margin-top: 1.5rem;">
+                        <a href="shop.html" style="color: var(--color-text); text-decoration: underline;">
+                            Continue Shopping
+                        </a>
+                    </p>
+                </div>
+
+                <!-- Wishlist -->
+                <div class="profile-section">
+                    <h2>My Wishlist</h2>
+                    <div id="profile-wishlist"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer"></footer>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="drawer">
+        <div class="drawer-overlay"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Shopping Cart</h3>
+                <button class="drawer-close">&times;</button>
+            </div>
+            <div class="drawer-body" id="cart-items"></div>
+            <div class="drawer-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cart-total-amount">$0.00</span>
+                </div>
+                <a href="checkout.html" class="btn btn-primary btn-block">Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Drawer -->
+    <div id="wishlist-drawer" class="drawer">
+        <div class="drawer-overlay"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Wishlist</h3>
+                <button class="drawer-close">&times;</button>
+            </div>
+            <div class="drawer-body" id="wishlist-items"></div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Search Products</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for products...">
+                <div id="search-results" class="search-results"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const wishlistContainer = document.getElementById('profile-wishlist');
+            const wishlist = cartManager.wishlist;
+
+            if (wishlist.length === 0) {
+                wishlistContainer.innerHTML = '<p style="text-align: center; color: var(--color-gray);">Your wishlist is empty</p>';
+            } else {
+                wishlistContainer.innerHTML = '<div class="products-grid">' + 
+                    wishlist.slice(0, 4).map(product => createProductCard(product)).join('') + 
+                    '</div>';
+            }
+        });
+    </script>
+</body>
+</html>

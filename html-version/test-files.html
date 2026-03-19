@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Test - NextEra Fashion</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 2rem;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .success { color: #10b981; }
+        .error { color: #ef4444; }
+        .test-item { padding: 0.5rem 0; }
+        h1 { color: #fff; }
+        .section { margin: 2rem 0; background: #2a2a2a; padding: 1.5rem; border-radius: 0.5rem; }
+    </style>
+</head>
+<body>
+    <h1>🔍 NextEra Fashion - File Verification</h1>
+    <p>Testing all files and resources...</p>
+
+    <div class="section">
+        <h2>📄 HTML Files</h2>
+        <div id="html-tests"></div>
+    </div>
+
+    <div class="section">
+        <h2>🎨 CSS Files</h2>
+        <div id="css-tests"></div>
+    </div>
+
+    <div class="section">
+        <h2>⚡ JavaScript Files</h2>
+        <div id="js-tests"></div>
+    </div>
+
+    <div class="section">
+        <h2>📦 Application Test</h2>
+        <div id="app-tests"></div>
+    </div>
+
+    <script>
+        const htmlFiles = [
+            'index.html',
+            'shop.html',
+            'shop-men.html',
+            'shop-women.html',
+            'product.html',
+            'checkout.html',
+            'profile.html',
+            'about.html',
+            'faq.html',
+            'contact.html',
+            'privacy-policy.html',
+            'terms.html',
+            'return-policy.html'
+        ];
+
+        const cssFiles = [
+            'css/styles.css',
+            'css/components.css'
+        ];
+
+        const jsFiles = [
+            'js/products.js',
+            'js/cart.js',
+            'js/components.js',
+            'js/main.js'
+        ];
+
+        async function testFile(file, type) {
+            try {
+                const response = await fetch(file);
+                if (response.ok) {
+                    return `<div class="test-item success">✓ ${file} - OK</div>`;
+                } else {
+                    return `<div class="test-item error">✗ ${file} - NOT FOUND (${response.status})</div>`;
+                }
+            } catch (error) {
+                return `<div class="test-item error">✗ ${file} - ERROR: ${error.message}</div>`;
+            }
+        }
+
+        async function runTests() {
+            // Test HTML files
+            const htmlResults = await Promise.all(htmlFiles.map(f => testFile(f, 'html')));
+            document.getElementById('html-tests').innerHTML = htmlResults.join('');
+
+            // Test CSS files
+            const cssResults = await Promise.all(cssFiles.map(f => testFile(f, 'css')));
+            document.getElementById('css-tests').innerHTML = cssResults.join('');
+
+            // Test JS files
+            const jsResults = await Promise.all(jsFiles.map(f => testFile(f, 'js')));
+            document.getElementById('js-tests').innerHTML = jsResults.join('');
+
+            // Test application
+            testApplication();
+        }
+
+        function testApplication() {
+            const tests = [];
+
+            // Test if products are loaded
+            if (typeof products !== 'undefined') {
+                tests.push(`<div class="test-item success">✓ Products array loaded (${products.length} products)</div>`);
+            } else {
+                tests.push(`<div class="test-item error">✗ Products not loaded</div>`);
+            }
+
+            // Test cart manager
+            if (typeof CartManager !== 'undefined') {
+                tests.push(`<div class="test-item success">✓ CartManager class available</div>`);
+            } else {
+                tests.push(`<div class="test-item error">✗ CartManager not loaded</div>`);
+            }
+
+            // Test localStorage
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                tests.push(`<div class="test-item success">✓ LocalStorage working</div>`);
+            } catch (e) {
+                tests.push(`<div class="test-item error">✗ LocalStorage not available</div>`);
+            }
+
+            // Test functions
+            if (typeof getProductById !== 'undefined') {
+                tests.push(`<div class="test-item success">✓ Product functions available</div>`);
+            } else {
+                tests.push(`<div class="test-item error">✗ Product functions not loaded</div>`);
+            }
+
+            document.getElementById('app-tests').innerHTML = tests.join('');
+
+            // Final summary
+            setTimeout(() => {
+                const successCount = document.querySelectorAll('.success').length;
+                const errorCount = document.querySelectorAll('.error').length;
+                const total = successCount + errorCount;
+
+                document.body.insertAdjacentHTML('beforeend', `
+                    <div class="section" style="background: ${errorCount === 0 ? '#10b981' : '#ef4444'}; text-align: center;">
+                        <h2>📊 Test Results</h2>
+                        <p style="font-size: 1.5rem;">${successCount} / ${total} tests passed</p>
+                        ${errorCount === 0 ? '<p>✅ All systems operational!</p><a href="index.html" style="color: white; font-weight: bold;">→ Launch Website</a>' : '<p>⚠️ Some files missing or not loading</p>'}
+                    </div>
+                `);
+            }, 1000);
+        }
+
+        // Load required scripts first
+        const scripts = [
+            'js/products.js',
+            'js/cart.js',
+            'js/components.js',
+            'js/main.js'
+        ];
+
+        let scriptsLoaded = 0;
+        scripts.forEach(src => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = () => {
+                scriptsLoaded++;
+                if (scriptsLoaded === scripts.length) {
+                    runTests();
+                }
+            };
+            script.onerror = () => {
+                scriptsLoaded++;
+                if (scriptsLoaded === scripts.length) {
+                    runTests();
+                }
+            };
+            document.head.appendChild(script);
+        });
+    </script>
+</body>
+</html>

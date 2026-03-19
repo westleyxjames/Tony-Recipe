@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men's Collection - NextEra Fashion</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <!-- Header -->
+    <header id="header"></header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Men's Collection</span>
+            </div>
+
+            <h1 class="section-title">Men's Collection</h1>
+
+            <!-- Products Grid -->
+            <div id="products-grid" class="products-grid"></div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer"></footer>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="drawer">
+        <div class="drawer-overlay"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Shopping Cart</h3>
+                <button class="drawer-close">&times;</button>
+            </div>
+            <div class="drawer-body" id="cart-items"></div>
+            <div class="drawer-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cart-total-amount">$0.00</span>
+                </div>
+                <a href="checkout.html" class="btn btn-primary btn-block">Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Drawer -->
+    <div id="wishlist-drawer" class="drawer">
+        <div class="drawer-overlay"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Wishlist</h3>
+                <button class="drawer-close">&times;</button>
+            </div>
+            <div class="drawer-body" id="wishlist-items"></div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Search Products</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for products...">
+                <div id="search-results" class="search-results"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menProducts = getProductsByCategory('men');
+            renderProducts(menProducts, 'products-grid');
+        });
+    </script>
+</body>
+</html>

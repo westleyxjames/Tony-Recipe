@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - NextEra Fashion</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        @media (min-width: 768px) {
+            .product-detail {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .product-detail-image {
+            width: 100%;
+            border-radius: 0.5rem;
+        }
+
+        .product-detail-info h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-detail-price {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .product-description {
+            margin: 1.5rem 0;
+            color: var(--color-gray);
+            line-height: 1.8;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .add-to-cart-section {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header"></header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb" id="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <a href="shop.html">Shop</a>
+                <span>/</span>
+                <span id="breadcrumb-product">Product</span>
+            </div>
+
+            <!-- Product Detail -->
+            <div class="product-detail" id="product-detail">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- Related Products -->
+            <section style="margin-top: 4rem;">
+                <h2 class="section-title">You May Also Like</h2>
+                <div id="related-products" class="products-grid"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer"></footer>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="drawer">
+        <div class="drawer-overlay"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Shopping Cart</h3>
+                <button class="drawer-close">&times;</button>
+            </div>
+            <div class="drawer-body" id="cart-items"></div>
+            <div class="drawer-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cart-total-amount">$0.00</span>
+                </div>
+                <a href="checkout.html" class="btn btn-primary btn-block">Checkout</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Drawer -->
+    <div id="wishlist-drawer" class="drawer">
+        <div class="drawer-overlay"></div>
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3>Wishlist</h3>
+                <button class="drawer-close">&times;</button>
+            </div>
+            <div class="drawer-body" id="wishlist-items"></div>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Search Products</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="search-input" class="search-input" placeholder="Search for products...">
+                <div id="search-results" class="search-results"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/components.js"></script>
+    <script>
+        let selectedSize = null;
+        let currentQuantity = 1;
+
+        function loadProduct() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+
+            if (!productId) {
+                window.location.href = 'shop.html';
+                return;
+            }
+
+            const product = getProductById(productId);
+            if (!product) {
+                window.location.href = 'shop.html';
+                return;
+            }
+
+            // Update breadcrumb
+            document.getElementById('breadcrumb-product').textContent = product.name;
+
+            // Update page title
+            document.title = `${product.name} - NextEra Fashion`;
+
+            // Render product detail
+            const stars = '★'.repeat(Math.floor(product.rating)) + '☆'.repeat(5 - Math.floor(product.rating));
+            const isWishlisted = cartManager.isInWishlist(product.id);
+
+            document.getElementById('product-detail').innerHTML = `
+                <div>
+                    <img src="${product.image}" alt="${product.name}" class="product-detail-image">
+                </div>
+                <div class="product-detail-info">
+                    <h1>${product.name}</h1>
+                    <div class="product-rating">${stars} (${product.rating})</div>
+                    <div class="product-detail-price">$${product.price.toFixed(2)}</div>
+                    
+                    <div class="product-description">
+                        <p>Premium quality ${product.category === 'men' ? "men's" : "women's"} apparel crafted with attention to detail. Made from high-quality materials for comfort and durability. Perfect for any occasion.</p>
+                    </div>
+
+                    <div class="size-selector">
+                        <label class="filter-label">Select Size:</label>
+                        <div class="size-options">
+                            <button class="size-option" onclick="selectSize('XS')">XS</button>
+                            <button class="size-option" onclick="selectSize('S')">S</button>
+                            <button class="size-option" onclick="selectSize('M')">M</button>
+                            <button class="size-option" onclick="selectSize('L')">L</button>
+                            <button class="size-option" onclick="selectSize('XL')">XL</button>
+                        </div>
+                    </div>
+
+                    <div class="quantity-selector">
+                        <label class="filter-label">Quantity:</label>
+                        <div class="item-quantity">
+                            <button class="qty-btn" onclick="updateProductQuantity(-1)">−</button>
+                            <span class="qty-display" id="product-quantity">1</span>
+                            <button class="qty-btn" onclick="updateProductQuantity(1)">+</button>
+                        </div>
+                    </div>
+
+                    <div class="add-to-cart-section">
+                        <button class="btn btn-primary" style="flex: 1;" onclick="addCurrentProductToCart()">
+                            Add to Cart
+                        </button>
+                        <button class="action-btn ${isWishlisted ? 'active' : ''}" onclick="toggleProductWishlist(${product.id})" data-wishlist-btn="${product.id}" style="width: 3rem; height: 3rem;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="${isWishlisted ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            // Load related products
+            const relatedProducts = products
+                .filter(p => p.category === product.category && p.id !== product.id)
+                .slice(0, 4);
+            renderProducts(relatedProducts, 'related-products');
+        }
+
+        function selectSize(size) {
+            selectedSize = size;
+            document.querySelectorAll('.size-option').forEach(btn => {
+                btn.classList.remove('selected');
+                if (btn.textContent === size) {
+                    btn.classList.add('selected');
+                }
+            });
+        }
+
+        function updateProductQuantity(delta) {
+            currentQuantity = Math.max(1, currentQuantity + delta);
+            document.getElementById('product-quantity').textContent = currentQuantity;
+        }
+
+        function addCurrentProductToCart() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            const product = getProductById(productId);
+
+            if (!product) return;
+
+            if (!selectedSize) {
+                cartManager.showToast('Please select a size', 'error');
+                return;
+            }
+
+            cartManager.addToCart(product, currentQuantity, selectedSize);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadProduct);
+    </script>
+</body>
+</html>
